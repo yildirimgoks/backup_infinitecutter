@@ -1,1 +1,1 @@
-# InfiniteCutter
+# Infinite Cutter
