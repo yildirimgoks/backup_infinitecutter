@@ -6,7 +6,7 @@ public class Controller : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0,1.2f,0);
+        gameObject.GetComponent<Rigidbody2D>().velocity = new Vector3(0,2.5f,0);
 	}
 	
 	// Update is called once per frame
