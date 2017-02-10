@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class Controller : MonoBehaviour {
 
+	public float speed;
+	private Vector2 _velocity;
+	private int _lane;
+		
 	// Use this for initialization
 	void Start () {
-        gameObject.GetComponent<Rigidbody2D>().velocity = new Vector3(0,2.5f,0);
+		_velocity = new Vector2(0,speed);
+		gameObject.GetComponent<Rigidbody2D> ().velocity = _velocity;
+		_lane = 0;
 	}
 	
 	// Update is called once per frame
@@ -16,11 +22,27 @@ public class Controller : MonoBehaviour {
 
     void Control() {
         if (Input.GetKeyDown("right")) {
-            gameObject.transform.Translate(1.5f, 0, 0);     
+			if (_lane != 1) {
+				gameObject.transform.Translate (1.5f, 0, 0);
+				_lane += 1;
+			}    
         }
 
         if (Input.GetKeyDown("left")) {
-            gameObject.transform.Translate(-1.5f, 0, 0);
+			if (_lane != -1) {
+				gameObject.transform.Translate (-1.5f, 0, 0);
+				_lane -= 1;
+			}
         }
     }
+
+	void SetSpeedTo(float _speed){
+		speed = _speed;
+		_velocity.y = _speed;
+		gameObject.GetComponent<Rigidbody2D> ().velocity = _velocity;
+	}
+
+	public float GetSpeed(){
+		return speed;
+	}
 }
