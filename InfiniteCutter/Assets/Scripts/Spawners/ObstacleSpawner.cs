@@ -12,10 +12,7 @@ public class ObstacleSpawner : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Spawners = new Transform[3];
-		for (var i = 0; i < transform.childCount;i++) {
-			Spawners[i] = transform.GetChild(i);
-		}
+        SetLanes();
 		Spawn();
 	}
 
@@ -24,4 +21,12 @@ public class ObstacleSpawner : MonoBehaviour {
 		Instantiate(obj[Random.Range(0,obj.Length)],Spawners[lane].position,Quaternion.identity);
 		Invoke("Spawn", Random.Range(spawnMin,spawnMax));
 	}
+
+    void SetLanes() {
+        Spawners = new Transform[3];
+        for (var i = 0; i < transform.childCount; i++)
+        {
+            Spawners[i] = transform.GetChild(i);
+        }
+    }
 }

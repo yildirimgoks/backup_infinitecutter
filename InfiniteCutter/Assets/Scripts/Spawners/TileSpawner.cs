@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spawner : MonoBehaviour {
+public class TileSpawner : MonoBehaviour {
 
 
     public GameObject[] obj;
