@@ -13,7 +13,7 @@ public class TileSpawner : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		_tileLength = obj [1].transform.lossyScale.x;
+		_tileLength = obj [0].transform.lossyScale.x;
         Spawn();
 	}
 	
