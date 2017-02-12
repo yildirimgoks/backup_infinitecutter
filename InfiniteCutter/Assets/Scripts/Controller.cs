@@ -38,7 +38,8 @@ public class Controller : MonoBehaviour {
 
         if (Input.GetKeyDown("up")) {
             _animator = gameObject.GetComponent<Animator>();
-            _animator.SetTrigger("attacked");
+            _animator.ResetTrigger("backwalk");
+            _animator.SetTrigger("Attack");
             Collider2D[] CollidersInFront = Physics2D.OverlapAreaAll(new Vector2(transform.position.x - 0.5f, transform.position.y), new Vector2(transform.position.x + 0.5f, transform.position.y + 1.5f));
             foreach(Collider2D collided in CollidersInFront) {
                 if (collided.gameObject.tag=="Enemy")
