@@ -14,13 +14,51 @@ public class Controller : MonoBehaviour {
 		_velocity = new Vector2(0,speed);
 		gameObject.GetComponent<Rigidbody2D> ().velocity = _velocity;
 		_lane = 0;
-	}
+        GameObject.Find("SwipeController").GetComponent<SwipeControl>().SetMethodToCall(MyCallbackMethod);
+    }
 	
 	// Update is called once per frame
 	void Update () {
         Control();
 	}
 
+    //Touch Controls
+    private void MyCallbackMethod(SwipeControl.SWIPE_DIRECTION iDirection)
+    {
+        switch (iDirection)
+        {
+
+            case SwipeControl.SWIPE_DIRECTION.SD_LEFT:
+                if (_lane != -1)
+                {
+                    gameObject.transform.Translate(-1.5f, 0, 0);
+                    _lane -= 1;
+                }
+                break;
+            case SwipeControl.SWIPE_DIRECTION.SD_RIGHT:
+                if (_lane != 1)
+                {
+                    gameObject.transform.Translate(1.5f, 0, 0);
+                    _lane += 1;
+                }
+                break;
+            case SwipeControl.SWIPE_DIRECTION.SD_TOUCH:
+                _animator = gameObject.GetComponent<Animator>();
+                _animator.ResetTrigger("backwalk");
+                _animator.SetTrigger("Attack");
+                Collider2D[] CollidersInFront = Physics2D.OverlapAreaAll(new Vector2(transform.position.x - 0.5f, transform.position.y), new Vector2(transform.position.x + 0.5f, transform.position.y + 1.5f));
+                foreach (Collider2D collided in CollidersInFront)
+                {
+                    if (collided.gameObject.tag == "Enemy")
+                    {
+                        Destroy(collided.gameObject);
+                    }
+                }
+                break;
+        }
+    }
+
+    //Keyboard Controls
     void Control() {
         if (Input.GetKeyDown("right")) {
 			if (_lane != 1) {
