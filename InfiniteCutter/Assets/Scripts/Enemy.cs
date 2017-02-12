@@ -16,4 +16,9 @@ public class Enemy : MonoBehaviour {
 	void Update () {
 		
 	}
+
+	public void SetSpeed(){
+		_enemyVelocity = new Vector2(0, -EnemySpeed);
+		gameObject.GetComponent<Rigidbody2D>().velocity = _enemyVelocity;
+	}
 }

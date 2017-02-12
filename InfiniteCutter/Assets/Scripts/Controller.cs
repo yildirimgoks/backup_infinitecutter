@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class Controller : MonoBehaviour {
 
-	public float speed;
+	public float startingSpeed;
+	private float _speed;
 	private Vector2 _velocity;
 	private int _lane;
+	private Vector3 _startingPlace;
     Animator _animator;
+
+	private int _killedEnemies;
 		
 	// Use this for initialization
 	void Start () {
-		_velocity = new Vector2(0,speed);
+		_startingPlace=transform.position;
+		_speed = startingSpeed;
+		_velocity = new Vector2(0,_speed);
 		gameObject.GetComponent<Rigidbody2D> ().velocity = _velocity;
 		_lane = 0;
         GameObject.Find("SwipeController").GetComponent<SwipeControl>().SetMethodToCall(MyCallbackMethod);
@@ -44,7 +50,7 @@ public class Controller : MonoBehaviour {
                 break;
             case SwipeControl.SWIPE_DIRECTION.SD_TOUCH:
                 _animator = gameObject.GetComponent<Animator>();
-                _animator.ResetTrigger("backwalk");
+                //_animator.ResetTrigger("backwalk");
                 _animator.SetTrigger("Attack");
                 Collider2D[] CollidersInFront = Physics2D.OverlapAreaAll(new Vector2(transform.position.x - 0.5f, transform.position.y), new Vector2(transform.position.x + 0.5f, transform.position.y + 1.5f));
                 foreach (Collider2D collided in CollidersInFront)
@@ -52,6 +58,7 @@ public class Controller : MonoBehaviour {
                     if (collided.gameObject.tag == "Enemy")
                     {
                         Destroy(collided.gameObject);
+					_killedEnemies += 1;
                     }
                 }
                 break;
@@ -76,25 +83,42 @@ public class Controller : MonoBehaviour {
 
         if (Input.GetKeyDown("up")) {
             _animator = gameObject.GetComponent<Animator>();
-            _animator.ResetTrigger("backwalk");
+			//_animator.ResetTrigger("backwalk");
             _animator.SetTrigger("Attack");
             Collider2D[] CollidersInFront = Physics2D.OverlapAreaAll(new Vector2(transform.position.x - 0.5f, transform.position.y), new Vector2(transform.position.x + 0.5f, transform.position.y + 1.5f));
             foreach(Collider2D collided in CollidersInFront) {
                 if (collided.gameObject.tag=="Enemy")
                 {
                     Destroy(collided.gameObject);
+					_killedEnemies += 1;
                 }
             }
         }
     }
 
-	void SetSpeedTo(float _speed){
-		speed = _speed;
-		_velocity.y = _speed;
+	public void SetSpeedTo(float speed){
+		_speed = speed;
+		_velocity.y = speed;
+		_velocity.x = 0f;
 		gameObject.GetComponent<Rigidbody2D> ().velocity = _velocity;
 	}
 
 	public float GetSpeed(){
-		return speed;
+		return startingSpeed;//should change
+	}
+
+	public void ResetPlayer(){
+		transform.position=_startingPlace;
+		_lane = 0;
+		SetSpeedTo(startingSpeed);
+		_killedEnemies = 0;
+	}
+
+	public int GetDistance(){
+		return (int)(transform.position.y - _startingPlace.y);
+	}
+
+	public int GetKillCount(){
+		return _killedEnemies;
 	}
 }

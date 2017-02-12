@@ -17,7 +17,7 @@ public class TileSpawner : MonoBehaviour {
         Spawn();
 	}
 	
-	void Spawn () {
+	public void Spawn () {
         Instantiate(obj[Random.Range(0,obj.Length)],transform.position,Quaternion.identity);
 		Invoke("Spawn", _tileLength/controller.GetSpeed());
 	}
