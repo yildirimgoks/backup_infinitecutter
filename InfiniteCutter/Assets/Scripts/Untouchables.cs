@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Untouchables : MonoBehaviour {
 
+    public GameObject Player;
+    Animator playerAnimator;
 
 	// Use this for initialization
 	void Start () {
@@ -18,8 +20,10 @@ public class Untouchables : MonoBehaviour {
     
     void OnCollisionEnter2D(Collision2D coll) {
         if (coll.gameObject.tag=="Player") {
-			Camera.main.GetComponent<GameController> ().EndRound ();
+            Player.GetComponent<Animator>().SetTrigger("Dead");
+        Camera.main.GetComponent<GameController> ().EndRound ();
 		}
+
 		if (coll.gameObject.tag == "Enemy") {
 			Physics2D.IgnoreCollision (coll.collider, GetComponent<Collider2D>());
 			coll.gameObject.GetComponent<Enemy> ().SetSpeed ();

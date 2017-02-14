@@ -8,6 +8,7 @@ public class UIController : MonoBehaviour {
 	public GameObject replayButton;
 	public Text gameOverText;
 	public GameObject startGameButton;
+    private Rect _smallerButtonRect;
 
 	// Use this for initialization
 	void Start () {
@@ -23,6 +24,7 @@ public class UIController : MonoBehaviour {
 		startGameButton.SetActive(false);
 	}
 
+
 	public void StartRound(){
 		replayButton.SetActive (false);
 		gameOverText.gameObject.SetActive (false);
@@ -30,7 +32,8 @@ public class UIController : MonoBehaviour {
 
 	public void EndRound(int distance, int killCount){
 		replayButton.SetActive (true);
-		gameOverText.text = "Game Over\nDistance: " + distance.ToString ()+"\nKill Count: "+killCount.ToString();
+        //gameOverText.text = "Game Over\nDistance: " + distance.ToString ()+"\nKill Count: "+killCount.ToString();
+        gameOverText.text = "Score: " + distance.ToString();
 		gameOverText.gameObject.SetActive (true);
 	}
 }
