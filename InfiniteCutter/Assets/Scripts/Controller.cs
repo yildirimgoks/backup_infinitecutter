@@ -10,6 +10,8 @@ public class Controller : MonoBehaviour {
 	private int _lane;
 	private Vector3 _startingPlace;
     Animator _animator;
+    public AudioClip LaneChange;
+    public AudioClip SwordHit;
 
 	private int _killedEnemies;
 		
@@ -37,6 +39,7 @@ public class Controller : MonoBehaviour {
             case SwipeControl.SWIPE_DIRECTION.SD_LEFT:
                 if (_lane != -1)
                 {
+                    gameObject.GetComponent<AudioSource>().PlayOneShot(LaneChange);
                     gameObject.transform.Translate(-1.5f, 0, 0);
                     _lane -= 1;
                 }
@@ -44,6 +47,7 @@ public class Controller : MonoBehaviour {
             case SwipeControl.SWIPE_DIRECTION.SD_RIGHT:
                 if (_lane != 1)
                 {
+                    gameObject.GetComponent<AudioSource>().PlayOneShot(LaneChange);
                     gameObject.transform.Translate(1.5f, 0, 0);
                     _lane += 1;
                 }
@@ -68,14 +72,16 @@ public class Controller : MonoBehaviour {
     void Control() {
         if (Input.GetKeyDown("right")) {
 			if (_lane != 1) {
-				gameObject.transform.Translate (1.5f, 0, 0);
+                gameObject.GetComponent<AudioSource>().PlayOneShot(LaneChange);
+                gameObject.transform.Translate (1.5f, 0, 0);
 				_lane += 1;
 			}    
         }
 
         if (Input.GetKeyDown("left")) {
 			if (_lane != -1) {
-				gameObject.transform.Translate (-1.5f, 0, 0);
+                gameObject.GetComponent<AudioSource>().PlayOneShot(LaneChange);
+                gameObject.transform.Translate (-1.5f, 0, 0);
 				_lane -= 1;
 			}
         }
@@ -88,6 +94,7 @@ public class Controller : MonoBehaviour {
             foreach(Collider2D collided in CollidersInFront) {
                 if (collided.gameObject.tag=="Enemy")
                 {
+                    gameObject.GetComponent<AudioSource>().PlayOneShot(SwordHit);
                     Destroy(collided.gameObject);
 					_killedEnemies += 1;
                 }
