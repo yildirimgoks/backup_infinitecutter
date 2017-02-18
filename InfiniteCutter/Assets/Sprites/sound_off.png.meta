@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 14ad34bf713e72f48a0645a0eef1ec2e
-timeCreated: 1487068320
+guid: 58ffd3830465cfd4da99a15203d4ec1a
+timeCreated: 1487422240
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Play Button_dark_0
+    21300000: sound_off_0
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -79,15 +79,15 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Play Button_dark_0
+      name: sound_off_0
       rect:
         serializedVersion: 2
-        x: 32
-        y: 160
-        width: 448
-        height: 192
+        x: 166
+        y: 98
+        width: 177
+        height: 177
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0

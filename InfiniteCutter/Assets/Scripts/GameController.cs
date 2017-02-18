@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
@@ -8,18 +9,23 @@ public class GameController : MonoBehaviour {
 	public Controller Controller;
     public AudioClip MainTheme;
     public AudioClip Click;
+    public Button SoundButton;
+    public Sprite[] SoundSprites;
     AudioSource AudioSource;
+    
 
 	public float DistanceMultiplier;
 	public float KillMultiplier;
 	private int _score;
 	private int _highScore;
+    bool muted = false;
 
 	public ObstacleSpawner ObstacleSpawner;
 
 	// Use this for initialization
 	void Start () {
-		_highScore = PlayerPrefs.GetInt ("highScore");
+        AudioListener.pause = false;
+        _highScore = PlayerPrefs.GetInt ("highScore");
         gameObject.GetComponent<AudioSource>().Play();
 	}
 	
@@ -75,6 +81,17 @@ public class GameController : MonoBehaviour {
         AudioSource.PlayOneShot(Click);
     }
 
+    public void SoundSetting(){
+        if (!muted) {
+            AudioListener.pause = true;
+            muted = true;
+            SoundButton.image.overrideSprite = SoundSprites[0];
+        }
 
-
+        else if (muted) {
+            AudioListener.pause = false;
+            muted = false;
+            SoundButton.image.overrideSprite = SoundSprites[1];
+        }
+    }
 }
