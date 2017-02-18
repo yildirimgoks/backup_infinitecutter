@@ -12,6 +12,7 @@ public class UIController : MonoBehaviour {
 	public GameObject startGameButton;
     private Rect _smallerButtonRect;
 	public Text scoreLabel;
+    public GameObject soundButton;
 
 	// Use this for initialization
 	void Start () {
@@ -25,10 +26,12 @@ public class UIController : MonoBehaviour {
 
 	public void StartGame(){
 		startGameButton.SetActive(false);
-	}
+        soundButton.SetActive(false);
+    }
 
 
 	public void StartRound(){
+        soundButton.SetActive(false);
 		replayButton.SetActive (false);
 		gameOverText.gameObject.SetActive (false);
 	}
@@ -40,7 +43,8 @@ public class UIController : MonoBehaviour {
 		else
 			gameOverText.text = "Score\n" + score.ToString();
 		gameOverText.gameObject.SetActive (true);
-	}
+        soundButton.SetActive(true);
+    }
 
 	public void UpdateLabels(){
 		scoreLabel.text = ((int)(Controller.GetDistance () * GameController.DistanceMultiplier + Controller.GetKillCount () * GameController.KillMultiplier)).ToString();
