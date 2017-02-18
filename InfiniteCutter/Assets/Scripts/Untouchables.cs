@@ -20,7 +20,6 @@ public class Untouchables : MonoBehaviour {
     
     void OnCollisionEnter2D(Collision2D coll) {
         if (coll.gameObject.tag=="Player") {
-            Player.GetComponent<Animator>().SetTrigger("Dead");
         Camera.main.GetComponent<GameController> ().EndRound ();
 		}
 

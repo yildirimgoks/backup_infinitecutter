@@ -5,10 +5,13 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour {
 
+	public Controller Controller;
+	public GameController GameController;
 	public GameObject replayButton;
 	public Text gameOverText;
 	public GameObject startGameButton;
     private Rect _smallerButtonRect;
+	public Text scoreLabel;
 
 	// Use this for initialization
 	void Start () {
@@ -17,7 +20,7 @@ public class UIController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		UpdateLabels ();
 	}
 
 	public void StartGame(){
@@ -30,10 +33,16 @@ public class UIController : MonoBehaviour {
 		gameOverText.gameObject.SetActive (false);
 	}
 
-	public void EndRound(int distance, int killCount){
+	public void EndRound(int score, bool isHighScore){
 		replayButton.SetActive (true);
-        //gameOverText.text = "Game Over\nDistance: " + distance.ToString ()+"\nKill Count: "+killCount.ToString();
-        gameOverText.text = "Score: " + distance.ToString();
+		if(isHighScore)
+        	gameOverText.text = "High Score!\n " + score.ToString();
+		else
+			gameOverText.text = "Score\n" + score.ToString();
 		gameOverText.gameObject.SetActive (true);
+	}
+
+	public void UpdateLabels(){
+		scoreLabel.text = ((int)(Controller.GetDistance () * GameController.DistanceMultiplier + Controller.GetKillCount () * GameController.KillMultiplier)).ToString();
 	}
 }

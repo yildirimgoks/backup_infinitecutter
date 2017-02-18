@@ -20,7 +20,7 @@ public class Controller : MonoBehaviour {
 		_startingPlace=transform.position;
 		_speed = startingSpeed;
 		_velocity = new Vector2(0,_speed);
-		gameObject.GetComponent<Rigidbody2D> ().velocity = _velocity;
+		gameObject.GetComponent<Rigidbody2D> ().velocity = Vector2.zero;
 		_lane = 0;
         GameObject.Find("SwipeController").GetComponent<SwipeControl>().SetMethodToCall(MyCallbackMethod);
     }
@@ -116,8 +116,9 @@ public class Controller : MonoBehaviour {
 	public void ResetPlayer(){
 		transform.position=_startingPlace;
 		_lane = 0;
-		SetSpeedTo(startingSpeed);
 		_killedEnemies = 0;
+		//gameObject.GetComponent<Animator> ().SetBool ("Start", true);
+		SetSpeedTo(startingSpeed);
 	}
 
 	public int GetDistance(){
@@ -126,5 +127,15 @@ public class Controller : MonoBehaviour {
 
 	public int GetKillCount(){
 		return _killedEnemies;
+	}
+
+	public void StartRunnning(){
+		//gameObject.GetComponent<Animator> ().SetBool ("Start", true);
+		gameObject.GetComponent<Rigidbody2D> ().velocity = _velocity;
+	}
+
+	public void StopRunning(){
+		gameObject.GetComponent<Rigidbody2D> ().velocity = Vector2.zero;
+		//gameObject.GetComponent<Animator> ().SetBool ("Start", false);
 	}
 }

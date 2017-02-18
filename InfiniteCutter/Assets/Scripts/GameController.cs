@@ -10,9 +10,16 @@ public class GameController : MonoBehaviour {
     public AudioClip Click;
     AudioSource AudioSource;
 
+	public float DistanceMultiplier;
+	public float KillMultiplier;
+	private int _score;
+	private int _highScore;
+
+	public ObstacleSpawner ObstacleSpawner;
+
 	// Use this for initialization
 	void Start () {
-		Time.timeScale = 0;
+		_highScore = PlayerPrefs.GetInt ("highScore");
         gameObject.GetComponent<AudioSource>().Play();
 	}
 	
@@ -21,8 +28,20 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void EndRound(){
-		UIController.EndRound (Controller.GetDistance(),Controller.GetKillCount());
-		Time.timeScale = 0;
+		ObstacleSpawner.isSpawning=false;
+		foreach (var untouchable in FindObjectsOfType<Untouchables>()) {
+			if (untouchable.gameObject.GetComponent<Rigidbody2D> ()) {
+				untouchable.gameObject.GetComponent<Rigidbody2D> ().velocity = Vector2.zero;
+			}
+		}
+		Controller.StopRunning();
+		Controller.gameObject.GetComponent<Animator> ().SetTrigger ("Dead");
+		_score = (int)(Controller.GetDistance () * DistanceMultiplier + Controller.GetKillCount () * KillMultiplier);
+		UIController.EndRound (_score,_score>_highScore);
+		if (_score > _highScore) {
+			_highScore = _score;
+			PlayerPrefs.SetInt ("highScore",_highScore);
+		}
 	}
 
 	public void StartRound(){
@@ -36,14 +55,17 @@ public class GameController : MonoBehaviour {
 
 		UIController.StartRound ();
 		Controller.ResetPlayer ();
-		Time.timeScale = 1;
+		ObstacleSpawner.isSpawning = true;
+		ObstacleSpawner.Spawn ();
 	}
 
 	public void StartGame(){
         //AudioSource = gameObject.GetComponent<AudioSource>();
         //AudioSource.Stop();
-        Time.timeScale = 1;
 		UIController.StartGame ();
+		Controller.StartRunnning ();
+		ObstacleSpawner.isSpawning = true;
+		ObstacleSpawner.Spawn ();
         //AudioSource.clip = MainTheme;
         //AudioSource.PlayDelayed(0.5f);
     }

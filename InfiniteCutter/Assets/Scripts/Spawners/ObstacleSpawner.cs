@@ -10,16 +10,20 @@ public class ObstacleSpawner : MonoBehaviour {
 	public float spawnMax;
 	private Transform[] Spawners;
 
+	public bool isSpawning;
+
 	// Use this for initialization
 	void Start () {
         SetLanes();
-		Spawn();
+		isSpawning = false;
+		//Spawn();
 	}
 
-	void Spawn () {
+	public void Spawn () {
 		var lane = Random.Range (0, 3);
 		Instantiate(obj[Random.Range(0,obj.Length)],Spawners[lane].position,Quaternion.identity);
-		Invoke("Spawn", Random.Range(spawnMin,spawnMax));
+		if(isSpawning)
+			Invoke("Spawn", Random.Range(spawnMin,spawnMax));
 	}
 
     void SetLanes() {
