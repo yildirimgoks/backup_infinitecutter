@@ -6,7 +6,7 @@ public class Controller : MonoBehaviour {
 
 	public float startingSpeed;
 	private float _speed;
-	private Vector2 _velocity;
+	public Vector2 PlayerVelocity;
 	private int _lane;
 	private Vector3 _startingPlace;
     Animator _animator;
@@ -19,7 +19,7 @@ public class Controller : MonoBehaviour {
 	void Start () {
 		_startingPlace=transform.position;
 		_speed = startingSpeed;
-		_velocity = new Vector2(0,_speed);
+		PlayerVelocity = new Vector2(0,_speed);
 		gameObject.GetComponent<Rigidbody2D> ().velocity = Vector2.zero;
 		_lane = 0;
         GameObject.Find("SwipeController").GetComponent<SwipeControl>().SetMethodToCall(MyCallbackMethod);
@@ -104,9 +104,9 @@ public class Controller : MonoBehaviour {
 
 	public void SetSpeedTo(float speed){
 		_speed = speed;
-		_velocity.y = speed;
-		_velocity.x = 0f;
-		gameObject.GetComponent<Rigidbody2D> ().velocity = _velocity;
+		PlayerVelocity.y = speed;
+		PlayerVelocity.x = 0f;
+		gameObject.GetComponent<Rigidbody2D> ().velocity = PlayerVelocity;
 	}
 
 	public float GetSpeed(){
@@ -131,7 +131,7 @@ public class Controller : MonoBehaviour {
 
 	public void StartRunnning(){
 		//gameObject.GetComponent<Animator> ().SetBool ("Start", true);
-		gameObject.GetComponent<Rigidbody2D> ().velocity = _velocity;
+		gameObject.GetComponent<Rigidbody2D> ().velocity = PlayerVelocity;
 	}
 
 	public void StopRunning(){

@@ -13,10 +13,14 @@ public class UIController : MonoBehaviour {
     private Rect _smallerButtonRect;
 	public Text scoreLabel;
     public GameObject soundButton;
+    public Text adAsker;
+    public GameObject[] adButtons;
+    private bool adAsked;
+   
 
 	// Use this for initialization
 	void Start () {
-		
+        adAsked = false;
 	}
 	
 	// Update is called once per frame
@@ -37,16 +41,30 @@ public class UIController : MonoBehaviour {
 	}
 
 	public void EndRound(int score, bool isHighScore){
-		replayButton.SetActive (true);
-		if(isHighScore)
-        	gameOverText.text = "High Score!\n " + score.ToString();
-		else
-			gameOverText.text = "Score\n" + score.ToString();
-		gameOverText.gameObject.SetActive (true);
-        soundButton.SetActive(true);
+        if (!adAsked) {
+            AskAd();
+        }
+
+        else if(adAsked) {
+            replayButton.SetActive(true);
+            if (isHighScore)
+                gameOverText.text = "High Score!\n " + score.ToString();
+            else
+                gameOverText.text = "Score\n" + score.ToString();
+            gameOverText.gameObject.SetActive(true);
+            soundButton.SetActive(true);
+            adAsked = false;
+        }  
     }
 
 	public void UpdateLabels(){
 		scoreLabel.text = ((int)(Controller.GetDistance () * GameController.DistanceMultiplier + Controller.GetKillCount () * GameController.KillMultiplier)).ToString();
 	}
+
+    public void AskAd() {
+        adAsker.gameObject.SetActive(true);
+        adButtons[0].SetActive(true);
+        adButtons[1].SetActive(true);
+        adAsked = true;
+    }
 }
