@@ -8,6 +8,7 @@ public class AdManager : MonoBehaviour
     public Controller Controller;
     private float _speed;
     private Vector2 _playerVelocity;
+    public ObstacleSpawner ObstacleSpawner;
 
     public void ShowRewardedAd()
     {
@@ -24,9 +25,14 @@ public class AdManager : MonoBehaviour
         {
             case ShowResult.Finished:
                 Debug.Log("The ad was successfully shown.");
+
                 _speed = Controller.startingSpeed;
                 _playerVelocity = new Vector2(0, _speed);
                 Player.GetComponent<Rigidbody2D>().velocity = _playerVelocity;
+                foreach (var untouchable in FindObjectsOfType<Untouchables>()) {
+                    Destroy(untouchable.gameObject);
+                }
+                StartCoroutine(ObstacleSpawner.SpawnWithDelay());
                 break;
             case ShowResult.Skipped:
                 Debug.Log("The ad was skipped before reaching the end.");

@@ -43,7 +43,7 @@ public class GameController : MonoBehaviour {
 		Controller.StopRunning();
 		Controller.gameObject.GetComponent<Animator> ().SetTrigger ("Dead");
 		_score = (int)(Controller.GetDistance () * DistanceMultiplier + Controller.GetKillCount () * KillMultiplier);
-		UIController.EndRound (_score,_score>_highScore);
+		UIController.EndRound ();
 		if (_score > _highScore) {
 			_highScore = _score;
 			PlayerPrefs.SetInt ("highScore",_highScore);
@@ -65,15 +65,19 @@ public class GameController : MonoBehaviour {
 		ObstacleSpawner.Spawn ();
 	}
 
+    public int GetScore() {
+        return _score;
+    }
+
+    public bool isHighScore() {
+        return _score > _highScore;
+    }
+
 	public void StartGame(){
-        //AudioSource = gameObject.GetComponent<AudioSource>();
-        //AudioSource.Stop();
 		UIController.StartGame ();
 		Controller.StartRunnning ();
 		ObstacleSpawner.isSpawning = true;
-		ObstacleSpawner.Spawn ();
-        //AudioSource.clip = MainTheme;
-        //AudioSource.PlayDelayed(0.5f);
+		ObstacleSpawner.Spawn (); 
     }
 
     public void Clicker() {

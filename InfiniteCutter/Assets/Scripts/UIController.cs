@@ -40,19 +40,13 @@ public class UIController : MonoBehaviour {
 		gameOverText.gameObject.SetActive (false);
 	}
 
-	public void EndRound(int score, bool isHighScore){
+	public void EndRound(){
         if (!adAsked) {
             AskAd();
         }
 
         else if(adAsked) {
-            replayButton.SetActive(true);
-            if (isHighScore)
-                gameOverText.text = "High Score!\n " + score.ToString();
-            else
-                gameOverText.text = "Score\n" + score.ToString();
-            gameOverText.gameObject.SetActive(true);
-            soundButton.SetActive(true);
+            ShowReplayPanel();
             adAsked = false;
         }  
     }
@@ -66,5 +60,21 @@ public class UIController : MonoBehaviour {
         adButtons[0].SetActive(true);
         adButtons[1].SetActive(true);
         adAsked = true;
+    }
+
+    public void CloseAdAsker() {
+        adAsker.gameObject.SetActive(false);
+        adButtons[0].SetActive(false);
+        adButtons[1].SetActive(false);
+    }
+
+    public void ShowReplayPanel() {
+        replayButton.SetActive(true);
+        if (GameController.isHighScore())
+            gameOverText.text = "High Score!\n " + GameController.GetScore().ToString();
+        else
+            gameOverText.text = "Score\n" + GameController.GetScore().ToString();
+        gameOverText.gameObject.SetActive(true);
+        soundButton.SetActive(true);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ObstacleSpawner : MonoBehaviour {
 
@@ -9,6 +10,7 @@ public class ObstacleSpawner : MonoBehaviour {
 	public float spawnMin;
 	public float spawnMax;
 	private Transform[] Spawners;
+    public Text Countdown;
 
 	public bool isSpawning;
 
@@ -33,4 +35,17 @@ public class ObstacleSpawner : MonoBehaviour {
             Spawners[i] = transform.GetChild(i);
         }
     }
+
+    public IEnumerator SpawnWithDelay() {
+        Countdown.gameObject.SetActive(true);
+        yield return new WaitForSeconds(1);
+        Countdown.text = "2";
+        yield return new WaitForSeconds(1);
+        Countdown.text = " 1";
+        yield return new WaitForSeconds(1);
+        Countdown.gameObject.SetActive(false);
+        isSpawning = true;
+        Spawn();
+    }
+
 }
