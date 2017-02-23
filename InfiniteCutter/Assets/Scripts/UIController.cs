@@ -15,12 +15,14 @@ public class UIController : MonoBehaviour {
     public GameObject soundButton;
     public Text adAsker;
     public GameObject[] adButtons;
+    public Text StartScreenHighScore;
     private bool adAsked;
    
 
 	// Use this for initialization
 	void Start () {
         adAsked = false;
+        StartScreenHighScore.text ="HIGH SCORE:\n" + GameController.GetHighScore().ToString();
 	}
 	
 	// Update is called once per frame
@@ -31,6 +33,7 @@ public class UIController : MonoBehaviour {
 	public void StartGame(){
 		startGameButton.SetActive(false);
         soundButton.SetActive(false);
+        StartScreenHighScore.gameObject.SetActive(false);
     }
 
 

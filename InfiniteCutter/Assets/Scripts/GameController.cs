@@ -73,6 +73,12 @@ public class GameController : MonoBehaviour {
         return _score > _highScore;
     }
 
+    public int GetHighScore()
+    {
+        _highScore = PlayerPrefs.GetInt("highScore");
+        return _highScore;
+    }
+
 	public void StartGame(){
 		UIController.StartGame ();
 		Controller.StartRunnning ();
