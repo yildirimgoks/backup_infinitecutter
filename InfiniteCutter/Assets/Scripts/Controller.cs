@@ -62,8 +62,12 @@ public class Controller : MonoBehaviour {
                 {
                     if (collided.gameObject.tag == "Enemy")
                     {
+                        gameObject.GetComponent<AudioSource>().PlayOneShot(SwordHit);
+                        ParticleSystem blood = Instantiate(bloodEffect) as ParticleSystem;
+                        blood.transform.position = collided.transform.position;
+                        blood.Play();
                         Destroy(collided.gameObject);
-					_killedEnemies += 1;
+                        _killedEnemies += 1;
                     }
                 }
                 break;
