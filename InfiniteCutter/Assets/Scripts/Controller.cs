@@ -12,6 +12,7 @@ public class Controller : MonoBehaviour {
     Animator _animator;
     public AudioClip LaneChange;
     public AudioClip SwordHit;
+    public ParticleSystem bloodEffect;
 
 	private int _killedEnemies;
 		
@@ -96,6 +97,9 @@ public class Controller : MonoBehaviour {
                 if (collided.gameObject.tag=="Enemy")
                 {
                     gameObject.GetComponent<AudioSource>().PlayOneShot(SwordHit);
+                    ParticleSystem blood = Instantiate(bloodEffect) as ParticleSystem;
+                    blood.transform.position = collided.transform.position;
+                    blood.Play();
                     Destroy(collided.gameObject);
 					_killedEnemies += 1;
                 }
