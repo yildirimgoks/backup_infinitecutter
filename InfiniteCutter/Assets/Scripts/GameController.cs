@@ -35,12 +35,18 @@ public class GameController : MonoBehaviour {
 
 	public void EndRound(){
 		ObstacleSpawner.isSpawning=false;
-		foreach (var untouchable in FindObjectsOfType<Untouchables>()) {
+        /* foreach (var untouchable in FindObjectsOfType<Untouchables>()) {
 			if (untouchable.gameObject.GetComponent<Rigidbody2D> ()) {
 				untouchable.gameObject.GetComponent<Rigidbody2D> ().velocity = Vector2.zero;
 			}
-		}
-		Controller.StopRunning();
+		} */
+
+        foreach (var untouchable in FindObjectsOfType<Untouchables>())
+        {
+            Destroy(untouchable.gameObject);
+        }
+
+        Controller.StopRunning();
 		Controller.gameObject.GetComponent<Animator> ().SetTrigger ("Dead");
 		_score = (int)(Controller.GetDistance () * DistanceMultiplier + Controller.GetKillCount () * KillMultiplier);
 		UIController.EndRound ();
@@ -83,7 +89,7 @@ public class GameController : MonoBehaviour {
 		UIController.StartGame ();
 		Controller.StartRunnning ();
 		ObstacleSpawner.isSpawning = true;
-		ObstacleSpawner.Spawn (); 
+        StartCoroutine(ObstacleSpawner.SpawnWithTutorial());
     }
 
     public void Clicker() {

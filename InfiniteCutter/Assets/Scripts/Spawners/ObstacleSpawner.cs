@@ -11,6 +11,7 @@ public class ObstacleSpawner : MonoBehaviour {
 	public float spawnMax;
 	private Transform[] Spawners;
     public Text Countdown;
+    public Text Tutorial;
 
 	public bool isSpawning;
 
@@ -27,6 +28,13 @@ public class ObstacleSpawner : MonoBehaviour {
 		if(isSpawning)
 			Invoke("Spawn", Random.Range(spawnMin,spawnMax));
 	}
+
+    public IEnumerator SpawnWithTutorial()    {
+        Tutorial.gameObject.SetActive(true);
+        yield return new WaitForSeconds(3);
+        Tutorial.gameObject.SetActive(false);
+        Spawn();
+    }
 
     void SetLanes() {
         Spawners = new Transform[3];

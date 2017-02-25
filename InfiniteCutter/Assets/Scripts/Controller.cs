@@ -27,6 +27,7 @@ public class Controller : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        //SetSpeedTo(Time.deltaTime+_speed);
         Control();
 	}
 
