@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class ObstacleSpawner : MonoBehaviour {
 
-
-	public GameObject[] obj;
+	public GameController GameController;
+	public GameObject[] Obstacles;
 	public float spawnMin;
 	public float spawnMax;
 	private Transform[] Spawners;
@@ -17,6 +17,9 @@ public class ObstacleSpawner : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		for(var i = 0; i < 3; i++) {
+			Obstacles [i + 3] = GameController.TierEnemies [(GameController.Tier+1)*i];
+		}
         SetLanes();
 		isSpawning = false;
 		//Spawn();
@@ -24,7 +27,7 @@ public class ObstacleSpawner : MonoBehaviour {
 
 	public void Spawn () {
 		var lane = Random.Range (0, 3);
-		Instantiate(obj[Random.Range(0,obj.Length)],Spawners[lane].position,Quaternion.identity);
+		Instantiate(Obstacles[Random.Range(0,Obstacles.Length)],Spawners[lane].position,Quaternion.identity);
 		if(isSpawning)
 			Invoke("Spawn", Random.Range(spawnMin,spawnMax));
 	}
@@ -55,5 +58,11 @@ public class ObstacleSpawner : MonoBehaviour {
         isSpawning = true;
         Spawn();
     }
+
+	public void OnTierChange(){
+		for(var i = 0; i < 3; i++) {
+			Obstacles [i + 3] = GameController.TierEnemies [(GameController.Tier+1)*i];
+		}
+	}
 
 }

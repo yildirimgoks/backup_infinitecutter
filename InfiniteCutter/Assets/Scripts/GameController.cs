@@ -21,17 +21,31 @@ public class GameController : MonoBehaviour {
 	private int _highScore;
     bool muted = false;
 
+	public int Tier;
+	public int TierInterval;
+	public GameObject[] TierTiles;
+	public GameObject[] TierEnemies;
+
 	public ObstacleSpawner ObstacleSpawner;
+	public TileSpawner[] TileSpawners;
 
 	// Use this for initialization
 	void Start () {
         AudioListener.pause = false;
         _highScore = PlayerPrefs.GetInt ("highScore");
         gameObject.GetComponent<AudioSource>().Play();
+		Tier = 0;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (Controller.GetDistance () == TierInterval * (Tier + 1)) {
+			Tier += 1;
+			ObstacleSpawner.OnTierChange ();
+			foreach (var spawner in TileSpawners) {
+				spawner.OnTierChange ();
+			}
+		}
 	}
 
 	public void EndRound(){
