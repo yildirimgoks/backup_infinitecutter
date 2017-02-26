@@ -63,9 +63,11 @@ public class Controller : MonoBehaviour {
                     if (collided.gameObject.tag == "Enemy")
                     {
                         gameObject.GetComponent<AudioSource>().PlayOneShot(SwordHit);
-                        ParticleSystem blood = Instantiate(bloodEffect) as ParticleSystem;
+                        //ParticleSystem blood = Instantiate(bloodEffect) as ParticleSystem;
+                        ParticleSystem blood = ParticlePooler.current.GetPooledParticle();
                         blood.transform.position = collided.transform.position;
                         blood.Play();
+                        Invoke("ParticlePooler.current.DestroyParticle(blood)", 2f);
                         Destroy(collided.gameObject);
                         _killedEnemies += 1;
                     }
@@ -101,11 +103,13 @@ public class Controller : MonoBehaviour {
                 if (collided.gameObject.tag=="Enemy")
                 {
                     gameObject.GetComponent<AudioSource>().PlayOneShot(SwordHit);
-                    ParticleSystem blood = Instantiate(bloodEffect) as ParticleSystem;
+                    //ParticleSystem blood = Instantiate(bloodEffect) as ParticleSystem;
+                    ParticleSystem blood = ParticlePooler.current.GetPooledParticle();
                     blood.transform.position = collided.transform.position;
                     blood.Play();
+                    Invoke("ParticlePooler.current.DestroyParticle(blood)", 2f);
                     Destroy(collided.gameObject);
-					_killedEnemies += 1;
+                    _killedEnemies += 1;
                 }
             }
         }
