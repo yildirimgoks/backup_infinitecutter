@@ -113,6 +113,10 @@ public class Controller : MonoBehaviour {
                 }
             }
         }
+
+		if(Input.GetKeyDown(KeyCode.Escape)){
+			Application.Quit ();
+		}
     }
 
 	public void SetSpeedTo(float speed){
