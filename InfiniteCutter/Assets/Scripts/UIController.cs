@@ -72,6 +72,7 @@ public class UIController : MonoBehaviour {
     }
 
     public void ShowReplayPanel() {
+		GameController.ResetTier ();
         replayButton.SetActive(true);
         if (GameController.isHighScore())
             gameOverText.text = "High Score!\n " + GameController.GetScore().ToString();

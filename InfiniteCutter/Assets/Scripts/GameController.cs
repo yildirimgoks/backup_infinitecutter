@@ -86,6 +86,14 @@ public class GameController : MonoBehaviour {
 		ObstacleSpawner.Spawn ();
 	}
 
+	public void ResetTier(){
+		Tier = 0;
+		ObstacleSpawner.OnTierChange ();
+		foreach (var spawner in TileSpawners) {
+			spawner.OnTierChange ();
+		}
+	}
+
     public int GetScore() {
         return _score;
     }
