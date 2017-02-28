@@ -20,12 +20,10 @@ public class Tile : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D coll) {
 		if (coll.gameObject.tag == "Player") {
-			Debug.Log (NextTile[1].position);
-            //var y = NextTile [1].position.y;
-            //y = transform.position.y + 12;
+
             movedTile = new Vector2(transform.position.x, transform.position.y+12);
             NextTile[1].position = movedTile;
-            Debug.Log (NextTile[1].position);
+           
 		}
 	}
 }
