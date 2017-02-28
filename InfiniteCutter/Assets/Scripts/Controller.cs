@@ -20,9 +20,10 @@ public class Controller : MonoBehaviour {
 		
 	// Use this for initialization
 	void Start () {
+		tileTrioPosition = new Vector2[3];
         for (int i = 0; i < TileTrio.Length; i++) {
-            tileTrioPosition[i] = new Vector2(TileTrio[i].transform.position.x, TileTrio[i].transform.position.y);
-        }
+			tileTrioPosition[i]=TileTrio[i].transform.position;
+		}
 
 		_startingPlace=transform.position;
 		_speed = startingSpeed;

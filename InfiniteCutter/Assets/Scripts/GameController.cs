@@ -21,6 +21,7 @@ public class GameController : MonoBehaviour {
 	private int _highScore;
     bool muted = false;
 
+	public bool TierSystemOn;
 	public int Tier;
 	public int TierInterval;
 	public GameObject[] TierTiles;
@@ -39,11 +40,13 @@ public class GameController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Controller.GetDistance () == TierInterval * (Tier + 1)) {
-			Tier += 1;
-			ObstacleSpawner.OnTierChange ();
-			foreach (var spawner in TileSpawners) {
-				spawner.OnTierChange ();
+		if (TierSystemOn) {
+			if (Controller.GetDistance () == TierInterval * (Tier + 1)) {
+				Tier += 1;
+				ObstacleSpawner.OnTierChange ();
+				foreach (var spawner in TileSpawners) {
+					spawner.OnTierChange ();
+				}
 			}
 		}
 	}
