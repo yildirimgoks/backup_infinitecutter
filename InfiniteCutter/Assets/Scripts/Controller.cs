@@ -13,11 +13,17 @@ public class Controller : MonoBehaviour {
     public AudioClip LaneChange;
     public AudioClip SwordHit;
     public ParticleSystem bloodEffect;
+    public GameObject[] TileTrio;
+    private Vector2[] tileTrioPosition;
 
 	private int _killedEnemies;
 		
 	// Use this for initialization
 	void Start () {
+        for (int i = 0; i < TileTrio.Length; i++) {
+            tileTrioPosition[i] = new Vector2(TileTrio[i].transform.position.x, TileTrio[i].transform.position.y);
+        }
+
 		_startingPlace=transform.position;
 		_speed = startingSpeed;
 		PlayerVelocity = new Vector2(0,_speed);
@@ -131,7 +137,10 @@ public class Controller : MonoBehaviour {
 	}
 
 	public void ResetPlayer(){
-		transform.position=_startingPlace;
+        for (int i = 0; i < TileTrio.Length; i++) {
+            TileTrio[i].transform.position = tileTrioPosition[i];
+        }
+        transform.position=_startingPlace;
 		_lane = 0;
 		_killedEnemies = 0;
 		//gameObject.GetComponent<Animator> ().SetBool ("Start", true);
