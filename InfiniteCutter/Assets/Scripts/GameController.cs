@@ -59,11 +59,6 @@ public class GameController : MonoBehaviour {
 			}
 		} */
 
-        foreach (var untouchable in FindObjectsOfType<Untouchables>())
-        {
-            Destroy(untouchable.gameObject);
-        }
-
         Controller.StopRunning();
 		Controller.gameObject.GetComponent<Animator> ().SetTrigger ("Dead");
 		_score = (int)(Controller.GetDistance () * DistanceMultiplier + Controller.GetKillCount () * KillMultiplier);

@@ -30,6 +30,12 @@ public class ObstacleSpawner : MonoBehaviour {
 		Instantiate(Obstacles[Random.Range(0,Obstacles.Length)],Spawners[lane].position,Quaternion.identity);
 		if(isSpawning)
 			Invoke("Spawn", Random.Range(spawnMin,spawnMax));
+        if (!isSpawning) {
+            foreach (var untouchable in FindObjectsOfType<Untouchables>()) {
+                //untouchable.gameObject.GetComponent<Collider2D>().enabled = false;
+                Destroy(untouchable.gameObject);
+            }
+        }
 	}
 
     public IEnumerator SpawnWithTutorial()    {
