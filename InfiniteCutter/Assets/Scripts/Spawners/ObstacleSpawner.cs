@@ -18,7 +18,7 @@ public class ObstacleSpawner : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		for(var i = 0; i < 3; i++) {
-			Obstacles [i + 3] = GameController.TierEnemies [(GameController.Tier+1)*i];
+			Obstacles [i + 5] = GameController.TierEnemies [(GameController.Tier+1)*i];
 		}
         SetLanes();
 		isSpawning = false;
